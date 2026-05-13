@@ -1,10 +1,8 @@
 package config
 
 import (
-	"os"
-	"strings"
-
 	"github.com/joho/godotenv"
+	"os"
 )
 
 // Config holds application configuration.
@@ -20,11 +18,9 @@ type Config struct {
 func Load() *Config {
 	_ = godotenv.Load()
 	return &Config{
-		Port:          getEnv("PORT", "8080"),
-		PostgresDSN:   getEnv("POSTGRES_DSN", "postgres://postgres:postgres@localhost:5432/historian?sslmode=disable"),
-		ClickHouseDSN: getEnv("CLICKHOUSE_DSN", "clickhouse://default:clickhouse_secret@localhost:9000/analytics"),
-		KafkaBrokers:  strings.Split(getEnv("KAFKA_BROKERS", "localhost:9092"), ","),
-		JWTSecret:     getEnv("JWT_SECRET", "super-secret-change-me"),
+		Port:        getEnv("PORT", "8080"),
+		PostgresDSN: getEnv("POSTGRES_DSN", "postgres://postgres:postgres@localhost:5432/historian?sslmode=disable"),
+		JWTSecret:   getEnv("JWT_SECRET", "super-secret-change-me"),
 	}
 }
 

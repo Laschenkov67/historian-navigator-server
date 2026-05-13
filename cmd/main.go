@@ -25,23 +25,13 @@ func main() {
 	}
 	defer pgPool.Close()
 
-	chConn, err := repository.NewClickHouseConn(cfg.ClickHouseDSN)
-	if err != nil {
-		log.Fatalf("clickhouse: %v", err)
-	}
-	defer chConn.Close()
-
-	kafkaProducer := repository.NewKafkaProducer(cfg.KafkaBrokers, "analytics-events")
-	defer kafkaProducer.Close()
-
 	userRepo := repository.NewUserRepo(pgPool)
 	//programRepo := repository.NewProgramRepo(pgPool)
 	testRepo := repository.NewTestRepo(pgPool)
-	analyticsRepo := repository.NewAnalyticsRepo(chConn)
 
 	authSvc := services.NewAuthService(userRepo, cfg.JWTSecret)
 	//programSvc := services.NewProgramService(programRepo)
-	testSvc := services.NewTestService(testRepo, analyticsRepo, kafkaProducer)
+	testSvc := services.NewTestService(testRepo)
 	//analyticsSvc := services.NewAnalyticsService(analyticsRepo)
 
 	mux := http.NewServeMux()

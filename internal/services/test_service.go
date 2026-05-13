@@ -18,8 +18,8 @@ type TestService struct {
 }
 
 // NewTestService constructor.
-func NewTestService(r *repository.TestRepo, a *repository.AnalyticsRepo, k *repository.KafkaProducer) *TestService {
-	return &TestService{repo: r, analytics: a, kafka: k}
+func NewTestService(r *repository.TestRepo) *TestService {
+	return &TestService{repo: r}
 }
 
 // List all tests.
